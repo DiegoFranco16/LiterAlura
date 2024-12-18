@@ -3,6 +3,7 @@ package com.alura.literalura.principal;
 import com.alura.literalura.model.DatosLibro;
 import com.alura.literalura.model.DatosRespuesta;
 import com.alura.literalura.model.Libro;
+import com.alura.literalura.repository.LibroRepository;
 import com.alura.literalura.service.ConsumoAPI;
 import com.alura.literalura.service.ConvierteDatos;
 
@@ -20,11 +21,10 @@ public class Principal {
     private List<Libro> libros;
     Optional<Libro> libroBuscado;
 
-
-    //    private LibroRepository repositorio;
-//    public Principal(LibroRepository repository) {
-//        this.repositorio = repository;
-//    }
+    private LibroRepository repositorio;
+    public Principal(LibroRepository repository) {
+        this.repositorio = repository;
+    }
     public void muestraElMenu() {
         var opcion = -1;
         while (opcion != 0) {
@@ -72,7 +72,7 @@ public class Principal {
         System.out.println("Escribe el nombre del libro que deseas buscar: ");
         var nombreLibro = teclado.nextLine();
         var json = consumoApi.obtenerDatos(URL_BASE + nombreLibro.replace(" ", "%20"));
-        System.out.println(json);
+        //System.out.println(json);
         DatosRespuesta datosRespuesta = conversor.obtenerDatos(json, DatosRespuesta.class);
         DatosLibro datos = datosRespuesta.resultados().get(0);
         return datos;
