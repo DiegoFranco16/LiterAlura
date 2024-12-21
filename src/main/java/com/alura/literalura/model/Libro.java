@@ -71,4 +71,14 @@ public class Libro {
     public void setNumeroDeDescargas(Integer numeroDeDescargas) {
         this.numeroDeDescargas = numeroDeDescargas;
     }
+
+    @Override
+    public String toString() {
+        return "---------Libro---------" + "\n" +
+                "Titulo: " + titulo + "\n" +
+                "Autor: " + (autor != null ? autor.getNombre() : "Sin autor") + "\n" +
+                "Idioma: " + idioma + "\n" +
+                "Número de descargas: " + numeroDeDescargas+ "\n" +
+                "-----------------------\n";
+    }
 }

@@ -14,7 +14,7 @@ public class Autor {
     private String nombre;
     private Integer anioNacimiento;
     private Integer anioMuerte;
-    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Libro> libros;
 
 
@@ -68,5 +68,18 @@ public class Autor {
         this.libros = libros;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder librosString = new StringBuilder();
+        if (libros != null && !libros.isEmpty()) {
+            libros.forEach(libro -> librosString.append("- ").append(libro.getTitulo()).append("\n"));
+        } else {
+            librosString.append("No tiene libros registrados.\n");
+        }
 
+        return "Nombre autor: " + nombre + "\n" +
+                "Fecha de nacimiento: " + anioNacimiento + "\n" +
+                "Fecha de fallecimiento: " + anioMuerte + "\n" +
+                "Libros:\n" + librosString ;
+    }
 }

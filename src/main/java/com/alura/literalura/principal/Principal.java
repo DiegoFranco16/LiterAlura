@@ -29,6 +29,8 @@ public class Principal {
         var opcion = -1;
         while (opcion != 0) {
             var menu = """
+                    
+                    _____________________________________________________
                     1 - Buscar libro por titulo 
                     2 - Listar libros registrados
                     3 - Listar autores registrados
@@ -91,7 +93,7 @@ public class Principal {
 
         // Validar que existan resultados
         if (datosRespuesta.resultados() == null || datosRespuesta.resultados().isEmpty()) {
-            throw new RuntimeException("No se encontraron libros con ese nombre.");
+            throw new RuntimeException("******* No se encontraron libros con ese nombre *******");
         }
         DatosLibro datos = datosRespuesta.resultados().get(0);
         return datos;
@@ -108,14 +110,14 @@ public class Principal {
 
             // Verificar si el libro ya existe en la BD por título (ignorando mayúsculas)
             if (libroRepository.findByTituloIgnoreCase(datosLibro.titulo()).isPresent()) {
-                System.out.println("El libro ya está registrado");
+                System.out.println("******* El libro ya está registrado *******");
                 return;
             }
 
             // Obtener el primer autor desde los datos del libro
             DatosAutor datosAutor = datosLibro.autores().stream()
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException("No se encontró ningún autor en los datos del libro"));
+                    .orElseThrow(() -> new IllegalArgumentException("******* No se encontró ningún autor en los datos del libro *******"));
 
             // Buscar si el autor ya existe en la BD. Si no existe, se crea y persiste de inmediato.
             Autor autor = autorRepository.findByNombre(datosAutor.nombre())
@@ -130,19 +132,19 @@ public class Principal {
             // Guardar el nuevo libro en la base de datos
             libroRepository.save(nuevoLibro);
 
-            System.out.println("Libro y autor registrados exitosamente.");
+            System.out.println("******* Libro y autor registrados exitosamente *******");
         } catch (RuntimeException e){
-            System.out.println("No se ha encontrado un libro relacionado a ese nombre.");
+            System.out.println("******* No se ha encontrado un libro relacionado a ese nombre  *******");
         }
     }
 
     public void listarLibrosRegistrados() {
-        System.out.println("Libros registrados:");
+        System.out.println("******* Libros registrados: *******\"");
         libroRepository.findAll().forEach(System.out::println);
     }
 
     public void listarAutoresRegistrados() {
-        System.out.println("Autores registrados:");
+        System.out.println("******* Autores registrados: *******\"");
         autorRepository.findAll().forEach(System.out::println);
     }
 
@@ -154,9 +156,9 @@ public class Principal {
         List<Autor> autoresVivos = autorRepository.findAutoresVivosEnAnio(anio);
 
         if (autoresVivos.isEmpty()) {
-            System.out.println("No se encontraron autores vivos en el año " + anio);
+            System.out.println("******* No se encontraron autores vivos en el año " + anio + " *******");
         } else {
-            System.out.println("Autores vivos en el año " + anio + ":");
+            System.out.println("******* Autores vivos en el año " + anio + ": *******\n");
             autoresVivos.forEach(System.out::println);
         }
     }
@@ -178,9 +180,9 @@ public class Principal {
         List<Libro> librosPorIdioma = libroRepository.findByIdiomaIgnoreCase(idioma);
 
         if (librosPorIdioma.isEmpty()) {
-            System.out.println("No se encontraron libros en el idioma " + idioma);
+            System.out.println("******* No se encontraron libros en el idioma " + idioma + " *******");
         } else {
-            System.out.println("Libros en el idioma " + idioma + ":");
+            System.out.println("******* Libros en el idioma " + idioma + ": *******\n");
             librosPorIdioma.forEach(System.out::println);
         }
     }
@@ -197,9 +199,9 @@ public class Principal {
 
         // Mostrar los resultados
         if (libros.isEmpty()) {
-            System.out.println("No se encontraron libros con más de " + minDescargas + " descargas.");
+            System.out.println("******* No se encontraron libros con más de " + minDescargas + " descargas *******");
         } else {
-            System.out.println("Libros con más de " + minDescargas + " descargas:");
+            System.out.println("******* Libros con más de " + minDescargas + " descargas: *******\n");
             libros.forEach(System.out::println);
         }
     }
@@ -211,7 +213,7 @@ public class Principal {
         List<Libro> librosTop10 = libroRepository.findTop10Libros();
 
         if (librosTop10.isEmpty()) {
-            System.out.println("No se encontraron libros registrados.");
+            System.out.println("******* No se encontraron libros registrados *******");
         } else {
             librosTop10.stream()
                     .limit(10) // Asegurarnos de que solo mostramos los primeros 10
@@ -220,13 +222,13 @@ public class Principal {
     }
 
     public void mostrarEstadisticasDescargas() {
-        System.out.println("Estadísticas sobre descargas de libros:");
+        System.out.println("******* Estadísticas sobre descargas de libros: *******");
 
         // Obtener todas las descargas de los libros
         List<Libro> libros = libroRepository.findAll();
 
         if (libros.isEmpty()) {
-            System.out.println("No hay libros registrados para generar estadísticas.");
+            System.out.println("******* No hay libros registrados para generar estadísticas *******");
             return;
         }
 
