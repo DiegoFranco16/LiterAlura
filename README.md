@@ -63,7 +63,7 @@ El proyecto utiliza **Spring Framework** para una arquitectura robusta, **Hibern
    - Asegúrate de tener PostgreSQL instalado y configura una base de datos llamada `literatura`.
    - Crea un archivo `application.properties` en `src/main/resources/` con las siguientes propiedades:
      ```properties
-     spring.datasource.url=jdbc:postgresql://${DB_HOST}/literatura
+      spring.datasource.url=jdbc:postgresql://${DB_HOST}/literatura
       spring.datasource.username=${DB_USER}
       spring.datasource.password=${DB_PASSWORD}
       spring.datasource.driver-class-name=org.postgresql.Driver
