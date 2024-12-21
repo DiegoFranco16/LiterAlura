@@ -5,27 +5,28 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "libros")
+@Table(name = "autores")
 public class Autor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    //@Column(unique = true, nullable = false)
     private String nombre;
     private Integer anioNacimiento;
     private Integer anioMuerte;
-    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Libro> libros;
 
 
 
     public Autor (){}
 
-    public Autor(Long id, String nombre, Integer anioNacimiento, Integer anioMuerte) {
-        this.id = id;
-        this.nombre = nombre;
-        this.anioNacimiento = anioNacimiento;
-        this.anioMuerte = anioMuerte;
-    }
+
+    public Autor(DatosAutor datosAutor){
+         this.nombre = datosAutor.nombre();
+         this.anioNacimiento = datosAutor.anioNacimiento();
+         this.anioMuerte = datosAutor.anioMuerte();
+     }
 
     public Long getId() {
         return id;

@@ -2,7 +2,6 @@ package com.alura.literalura.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 
 @Entity
 @Table(name = "libros")
@@ -10,9 +9,10 @@ public class Libro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String titulo;
     @ManyToOne
+    @JoinColumn(name = "autor_id", nullable = false)
     private Autor autor;
     private String idioma;
     private Integer numeroDeDescargas;
@@ -20,13 +20,17 @@ public class Libro {
 
     public Libro() {}
 
-    public Libro(Long id, String titulo, Autor autor, String idioma, Integer numeroDeDescargas) {
-        this.id = id;
-        this.titulo = titulo;
-        this.autor = autor;
-        this.idioma = idioma;
-        this.numeroDeDescargas = numeroDeDescargas;
+    public Libro(DatosLibro datosLibro) {
+        this.titulo = datosLibro.titulo();
+//        DatosAutor primerAutor = datosLibro.autores().stream()
+//                .findFirst()
+//                .orElseThrow(() -> new IllegalArgumentException("No se encontró ningún autor en el DatosLibro"));
+        //this.autor = new Autor(primerAutor);
+        this.idioma = datosLibro.idiomas().stream().findFirst().orElse(null);
+        this.numeroDeDescargas = datosLibro.numeroDeDescargas();
     }
+
+
 
     public Long getId() {
         return id;
